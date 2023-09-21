@@ -30,4 +30,4 @@ def play_random_military_song():
 
 # アプリケーションを起動する
 if __name__ == "__main__":
-    play_random_military_song()
+     play_random_military_song()
