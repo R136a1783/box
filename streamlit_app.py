@@ -1,6 +1,6 @@
 # Streamlitライブラリをインポート
 import streamlit as st
-import ramdom
+import random
 
 st.title("おみくじアプリ")
 if st.button("おみくじを引く"):
