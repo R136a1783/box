@@ -2,32 +2,19 @@
 import random
 import requests
 
-# 軍歌のURLリストを取得する
-def get_military_song_urls():
-    response = requests.get("https://www.japanese-military-songs.com/")
-    html = response.text
+def get_random_military_song():
+  """日本の軍歌をランダムで取得する"""
+  military_songs = ["軍艦マーチ", "皇国の守護者", "愛国行進曲", "海ゆかば", "出征壮行曲", "暁の水平線", "戦友", "新しき朝", "進め、進め", "南海の花"]
+  return military_songs[random.randint(0, len(military_songs) - 1)]
 
-    song_urls = []
-    for a in html.split("<a href=\""):
-        if "/song/" in a:
-            song_urls.append("https://www.japanese-military-songs.com" + a)
+def play_military_song(military_song):
+  """日本の軍歌を再生する"""
+  url = f"https://www.youtube.com/results?search_query={military_song}"
+  response = requests.get(url)
+  video_id = response.json()["items"][0]["id"]["videoId"]
+  return f"https://www.youtube.com/watch?v={video_id}"
 
-    return song_urls
-
-# ランダムで軍歌を再生する
-def play_random_military_song():
-    song_urls = get_military_song_urls()
-    song_url = random.choice(song_urls)
-
-    response = requests.get(song_url)
-    mp3_data = response.content
-
-    with open("military_song.mp3", "wb") as f:
-        f.write(mp3_data)
-
-    # 再生する
-    subprocess.call(["mpg123", "military_song.mp3"])
-
-# アプリケーションを起動する
 if __name__ == "__main__":
-    play_random_military_song()
+  military_song = get_random_military_song()
+  url = play_military_song(military_song)
+  print(url)
